@@ -2,3 +2,4 @@
 FinalSpineBinToJson/bin/
 FinalSpineBinToJson/obj/
 FinalSpineBinToJson/testoutput.json
+FinalSpineBinToJson/examples/**/*.test.json
