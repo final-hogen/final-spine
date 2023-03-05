@@ -47,7 +47,13 @@ namespace FinalHogen.spine
       int count = reader.ReadVarint();
       for( int i=0; i<count; ++i ){
         KeyValuePair<string,JsonNode?> nameData = act(reader);
-        result.AddContent(nameData.Key,nameData.Value);
+        if(result.ContainsKey(nameData.Key)&&nameData.Value!=null){
+          JsonArray baseArray = result[nameData.Key]!.AsArray();
+          JsonArray array = nameData.Value.AsArray();
+          foreach(JsonNode? node in array){
+            if(node!=null)baseArray.Add(node.Clone());
+          }
+        }else result.AddContent(nameData.Key,nameData.Value);
       }
       return result;
     }
