@@ -177,13 +177,24 @@ namespace FinalHogen.json
             JsonNode? target = baseObject[current.Key];
             if(target!=null)target.AsObject().Merge(current.Value);
           }else if(baseObject.GetType()==typeof(JsonArray)){
-            JsonArray array = baseObject.AsArray();
-            foreach(JsonNode? node in addObject.AsArray()){
-              if(node!=null)array.Add(node.Clone());
-            }
+            JsonArray array = baseObject.AsArray().Merge(addObject);
           }else baseObject[current.Key] = current.Value.Clone();
         }else baseObject[current.Key] = current.Value.Clone();
       }
+      return baseObject;
+    }
+    public static JsonArray Merge(this JsonArray baseObject, JsonNode? addObject){
+      if(addObject==null)return baseObject;
+      if(!(addObject is JsonArray))return baseObject;
+      JsonArray array = baseObject.AsArray();
+      foreach(JsonNode? node in addObject.AsArray()){
+        if(node!=null)array.Add(node.Clone());
+      }
+      return baseObject;
+    }
+    public static JsonNode Merge(this JsonNode baseObject, JsonNode? addObject){
+      if(baseObject is JsonArray)return baseObject.AsArray().Merge(addObject);
+      if(baseObject is JsonObject)return baseObject.AsObject().Merge(addObject);
       return baseObject;
     }
   }

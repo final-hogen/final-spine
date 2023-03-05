@@ -48,11 +48,8 @@ namespace FinalHogen.spine
       for( int i=0; i<count; ++i ){
         KeyValuePair<string,JsonNode?> nameData = act(reader);
         if(result.ContainsKey(nameData.Key)&&nameData.Value!=null){
-          JsonArray baseArray = result[nameData.Key]!.AsArray();
-          JsonArray array = nameData.Value.AsArray();
-          foreach(JsonNode? node in array){
-            if(node!=null)baseArray.Add(node.Clone());
-          }
+          JsonNode? node = result[nameData.Key];
+          if(node!=null)node.Merge(nameData.Value);
         }else result.AddContent(nameData.Key,nameData.Value);
       }
       return result;
