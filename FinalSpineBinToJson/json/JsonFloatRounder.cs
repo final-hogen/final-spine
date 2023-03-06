@@ -90,7 +90,7 @@ namespace FinalHogen.json
       float newval = (float)Math.Round(dval,count,adjusttype);
       
       JsonValue newNode = JsonValue.Create(newval);
-      bool drop = newval==0&&IsDrop(valuePath,newval);
+      bool drop = IsDrop(valuePath,newval);
 
       string[] paths = value.GetFullpath();
       string key =paths[paths.Length-1];
